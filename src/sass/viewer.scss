@@ -1,0 +1,16 @@
+/**
+ *
+ * Viewer Style
+ *
+ * @author Takuto Yanagida
+ * @version 2021-10-18
+ *
+ */
+
+
+@use 'inside';
+
+
+div[data-nc-viewer] {
+	@include inside.style-inside;
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Viewer - Stile</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/viewer.min.css?v235609t">
+<link rel="stylesheet" href="css/style.min.css?v235609t">
+<script src="js/viewer.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+	const as = document.querySelectorAll('a');
+	NACSS.viewer(as);
+});
+</script>
+</head>
+<body>
+<div class="stile">
+
+	<h1>Viewer</h1>
+	<!-- <nav>
+		<a href="../index.html">Go Back</a>
+	</nav> -->
+
+	<div class="pseudo-tab-page">
+
+		<h2>Viewer</h2>
+
+		<figure>
+			<a href="https://picsum.photos/1500/1000.jpg">
+				<img width="300" height="200" src="https://via.placeholder.com/300x200.png" class="size-medium" alt="">
+			</a>
+		</figure>
+
+		<figure>
+			<a href="https://picsum.photos/1000/1500.jpg">
+				<img width="200" height="300" src="https://via.placeholder.com/200x300.png" class="size-medium-small" alt="">
+			</a>
+		</figure>
+
+		<h2>Viewer with caption</h2>
+
+		<figure>
+			<a href="https://picsum.photos/1000/1000.jpg">
+				<img width="200" height="200" src="https://via.placeholder.com/200x200.png" class="size-medium" alt="">
+			</a>
+			<figcaption>Short figure caption</figcaption>
+		</figure>
+
+		<figure>
+			<a href="https://picsum.photos/1600/900.jpg">
+				<img width="320" height="180" src="https://via.placeholder.com/320x180.png" class="size-medium" alt="">
+			</a>
+			<figcaption>
+				This is an example of very long figure caption.
+				Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+				cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			</figcaption>
+		</figure>
+
+		<figure>
+			<a href="https://picsum.photos/1200/1600.jpg">
+				<img width="300" height="400" src="https://via.placeholder.com/300x400.png" class="size-medium-small" alt="">
+			</a>
+			<figcaption>
+				This is an example of very long figure caption.
+				Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
+				cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+			</figcaption>
+		</figure>
+
+	</div>
+</div>
+</body>
+</html>

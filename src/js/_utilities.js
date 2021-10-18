@@ -1,0 +1,52 @@
+/**
+ *
+ * Utilities
+ *
+ * @author Takuto Yanagida
+ * @version 2021-10-18
+ *
+ */
+
+
+function enableClass(enabled, tar, cls) {
+	const key = cls.substr(1);
+	if (cls.startsWith(':')) {
+		if (enabled) {
+			tar.dataset[key] = '';
+		} else {
+			delete tar.dataset[key];
+		}
+	} else {
+		if (enabled) {
+			tar.classList.add(key);
+		} else {
+			tar.classList.remove(key);
+		}
+
+	}
+}
+
+function throttle(fn) {
+	let isRunning;
+	return (...args) => {
+		if (isRunning) return;
+		isRunning = true;
+		requestAnimationFrame(() => {
+			isRunning = false;
+			fn(...args);
+		});
+	};
+}
+
+const resizeListeners = [];
+
+function onResize(fn, doFirst = false) {
+	if (doFirst) fn();
+	resizeListeners.push(throttle(fn));
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+	window.addEventListener('resize', () => {
+		for (const l of resizeListeners) l();
+	}, { passive: true });
+});
