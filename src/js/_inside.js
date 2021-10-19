@@ -25,10 +25,8 @@ function initialize(as = [], opts = {}) {
 		styleInstantly: ':ncInstantly',
 		styleLoaded   : ':ncLoaded',
 
-		minWindowWidth: 600,
-		maxZoomRate   : 8,
-		hashPrefix    : 'viewer:',
-		padding       : '6rem',
+		maxZoomRate: 10,
+		hashPrefix : 'viewer:',
 
 		curId: null,
 	}, opts);
@@ -129,19 +127,6 @@ function createViewer(cm, a) {
 
 	prevInstance = inst;
 	instanceCount += 1;
-
-	// test begin
-	// inst.m1 = document.createElement('div');
-	// inst.m2 = document.createElement('div');
-	// inst.m3 = document.createElement('div');
-	// for (const m of [inst.m1, inst.m2, inst.m3]) {
-	// 	m.style.width = m.style.height = '16px';
-	// 	m.style.backgroundColor = 'red';
-	// 	m.style.position = 'absolute';
-	// 	inst._frm.appendChild(m);
-	// }
-	// inst.m3.style.backgroundColor = 'blue';
-	// test end
 	return inst;
 }
 
@@ -150,24 +135,24 @@ function createViewer(cm, a) {
 
 
 function setInitialSize(inst) {  // Called also when 'onResize'
-	inst._isPhone = (window.innerWidth < inst._cm.minWindowWidth);
 	inst._scale = 1;
 
 	const winAs = inst._frm.offsetWidth / inst._frm.offsetHeight;
 	const imgAs = inst._img.offsetWidth / inst._img.offsetHeight;
 	inst._isLandscape = (winAs < imgAs);
 
-	const size = inst._isPhone ? '100%' : 'calc(100% - ' + inst._cm.padding + ')';
-	const s = inst._img.style;
-	s.minWidth = '';
-	s.minHeight = '';
-	if (inst._isLandscape) {
-		s.width = size;
-		s.height = 'auto';
-	} else {
-		s.width = 'auto';
-		s.height = size;
-		s.maxWidth = 'none';
+	setSize(inst._img.style);
+	function setSize(s) {
+		s.minWidth  = '';
+		s.minHeight = '';
+		if (inst._isLandscape) {
+			s.width  = '100%';
+			s.height = 'auto';
+		} else {
+			s.width    = 'auto';
+			s.height   = '100%';
+			s.maxWidth = 'none';
+		}
 	}
 	inst._baseSize = inst._isLandscape ? inst._frm.clientWidth : inst._frm.clientHeight;
 	_doCenteringImage(inst._frm, inst._img);
@@ -257,12 +242,12 @@ function _onClose(e) {
 
 function _setScaledSize(inst, scale) {
 	inst._scale = Math.max(1, Math.min(inst._cm.maxZoomRate, scale));
-	let size = (inst._baseSize * inst._scale) + 'px';
-	if (!inst._isPhone) {
-		size = `calc(${size} - ${inst._cm.padding})`;
+	const size = (inst._baseSize * inst._scale) + 'px';
+	if (inst._isLandscape) {
+		inst._img.style.minWidth = size;
+	} else {
+		inst._img.style.minHeight = size;
 	}
-	if (inst._isLandscape) inst._img.style.minWidth = size;
-	else inst._img.style.minHeight = size;
 	_doCenteringImage(inst._frm, inst._img);
 }
 
@@ -338,13 +323,6 @@ function _enableTouchGesture(inst, frame) {
 		const [cx, cy] = getTouchPoint(ts);
 
 		if (2 <= ts.length) {
-			// inst.m3.style.left = frame.scrollLeft + cx + 'px';
-			// inst.m3.style.top  = frame.scrollTop  + cy + 'px';
-			// inst.m1.style.left = frame.scrollLeft - window.pageXOffset + ts[0].pageX + 'px';
-			// inst.m1.style.top  = frame.scrollTop  - window.pageYOffset + ts[0].pageY + 'px';
-			// inst.m2.style.left = frame.scrollLeft - window.pageXOffset + ts[1].pageX + 'px';
-			// inst.m2.style.top  = frame.scrollTop  - window.pageYOffset + ts[1].pageY + 'px';
-
 			const dist = touchDistance(ts);
 			if (baseDist) {
 				const s = dist / (baseDist * inst._scale);
@@ -358,12 +336,7 @@ function _enableTouchGesture(inst, frame) {
 		} else {
 			frame.scrollLeft = ix * inst._scale - cx;
 			frame.scrollTop  = iy * inst._scale - cy;
-
-			// inst.m3.style.left = frame.scrollLeft + cx + 'px';
-			// inst.m3.style.top  = frame.scrollTop  + cy + 'px';
 		}
-		frame.scrollLeft = ix * inst._scale - cx;
-		frame.scrollTop  = iy * inst._scale - cy;
 	}, { passive: false });
 
 	function touchPointToImagePoint(x, y) {

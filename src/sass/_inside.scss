@@ -3,7 +3,7 @@
  * Viewer
  *
  * @author Takuto Yanagida
- * @version 2021-10-18
+ * @version 2021-10-19
  *
  */
 
@@ -18,7 +18,7 @@
 	--closer-background-color: #{rgba(#000, 0.50)};
 	--fading-time            : 0.5s;
 	--caption-padding        : 1rem;
-	--image-margin           : 4rem;
+	--image-margin           : clamp(0px, calc((100vw - 600px) * 9999), 4rem);
 
 	display : none;
 	overflow: hidden;
@@ -50,6 +50,9 @@
 		background-color: var(--image-background-color);
 		transition      : opacity var(--fading-time);
 		box-sizing      : border-box;
+
+		background-clip: padding-box;
+		border         : var(--image-margin) solid transparent;
 	}
 	&[data-nc-loaded]:not([data-nc-visible]) > img {
 		opacity: 0 !important;
