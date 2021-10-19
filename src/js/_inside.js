@@ -141,16 +141,19 @@ function setInitialSize(inst) {  // Called also when 'onResize'
 	const imgAs = inst._img.offsetWidth / inst._img.offsetHeight;
 	inst._isLandscape = (winAs < imgAs);
 
+	const s = getComputedStyle(inst._img);
+	inst._margin = parseInt(s.outlineWidth) * 2;
+
 	setSize(inst._img.style);
 	function setSize(s) {
 		s.minWidth  = '';
 		s.minHeight = '';
 		if (inst._isLandscape) {
-			s.width  = '100%';
+			s.width  = `calc(100% - ${inst._margin}px)`;
 			s.height = 'auto';
 		} else {
 			s.width    = 'auto';
-			s.height   = '100%';
+			s.height   = `calc(100% - ${inst._margin}px)`;
 			s.maxWidth = 'none';
 		}
 	}
@@ -242,7 +245,8 @@ function _onClose(e) {
 
 function _setScaledSize(inst, scale) {
 	inst._scale = Math.max(1, Math.min(inst._cm.maxZoomRate, scale));
-	const size = (inst._baseSize * inst._scale) + 'px';
+
+	const size = (inst._baseSize * inst._scale - inst._margin) + 'px';
 	if (inst._isLandscape) {
 		inst._img.style.minWidth = size;
 	} else {

@@ -52,7 +52,9 @@
 		box-sizing      : border-box;
 
 		background-clip: padding-box;
-		border         : var(--image-margin) solid transparent;
+		border         : 1px solid #000;
+
+		outline: solid transparent var(--image-margin);
 	}
 	&[data-nc-loaded]:not([data-nc-visible]) > img {
 		opacity: 0 !important;
