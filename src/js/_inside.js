@@ -3,7 +3,7 @@
  * Viewer (JS)
  *
  * @author Takuto Yanagida
- * @version 2021-10-18
+ * @version 2021-10-19
  *
  */
 
@@ -26,7 +26,7 @@ function initialize(as = [], opts = {}) {
 		styleLoaded   : ':ncLoaded',
 
 		minWindowWidth: 600,
-		maxZoomRate   : 5,
+		maxZoomRate   : 8,
 		hashPrefix    : 'viewer:',
 		padding       : '6rem',
 
@@ -130,6 +130,18 @@ function createViewer(cm, a) {
 	prevInstance = inst;
 	instanceCount += 1;
 
+	// test begin
+	// inst.m1 = document.createElement('div');
+	// inst.m2 = document.createElement('div');
+	// inst.m3 = document.createElement('div');
+	// for (const m of [inst.m1, inst.m2, inst.m3]) {
+	// 	m.style.width = m.style.height = '16px';
+	// 	m.style.backgroundColor = 'red';
+	// 	m.style.position = 'absolute';
+	// 	inst._frm.appendChild(m);
+	// }
+	// inst.m3.style.backgroundColor = 'blue';
+	// test end
 	return inst;
 }
 
@@ -259,7 +271,7 @@ function _doCenteringImage(frame, image) {
 	const frmW = frame.clientWidth, frmH = frame.clientHeight;
 	const s = image.style;
 	s.left = (imgW < frmW) ? (((frmW - imgW) / 2) + 'px') : 0;
-	s.top = (imgH < frmH) ? (((frmH - imgH) / 2) + 'px') : 0;
+	s.top  = (imgH < frmH) ? (((frmH - imgH) / 2) + 'px') : 0;
 }
 
 function _enableMouseGesture(inst, frame) {
@@ -296,18 +308,18 @@ function _enableMouseGesture(inst, frame) {
 
 		const [cx, cy] = getCursorPoint(e);
 		const imgCx = (cx + frame.scrollLeft) / inst._scale;
-		const imgCy = (cy + frame.scrollTop) / inst._scale;
+		const imgCy = (cy + frame.scrollTop)  / inst._scale;
 
 		const s = 0 > e.deltaY ? 1.1 : 0.9;
 		_setScaledSize(inst, inst._scale * s);
 
 		frame.scrollLeft = imgCx * inst._scale - cx;
-		frame.scrollTop = imgCy * inst._scale - cy;
+		frame.scrollTop  = imgCy * inst._scale - cy;
 	}, true);
 }
 
 function _enableTouchGesture(inst, frame) {
-	let xS = 0, yS = 0;
+	let ix = 0, iy = 0;
 	let lastTouchCount = 0;
 	let baseDist = 0;
 
@@ -323,33 +335,47 @@ function _enableTouchGesture(inst, frame) {
 
 		const ts = e.touches;
 		if (lastTouchCount !== ts.length) updatePoint(ts);
-
 		const [cx, cy] = getTouchPoint(ts);
-		frame.scrollLeft += xS - cx;
-		frame.scrollTop += yS - cy;
-		xS = cx;
-		yS = cy;
 
 		if (2 <= ts.length) {
-			const imgCx = (cx + frame.scrollLeft) / inst._scale;
-			const imgCy = (cy + frame.scrollTop) / inst._scale;
-			const dist = touchDistance(ts);
+			// inst.m3.style.left = frame.scrollLeft + cx + 'px';
+			// inst.m3.style.top  = frame.scrollTop  + cy + 'px';
+			// inst.m1.style.left = frame.scrollLeft - window.pageXOffset + ts[0].pageX + 'px';
+			// inst.m1.style.top  = frame.scrollTop  - window.pageYOffset + ts[0].pageY + 'px';
+			// inst.m2.style.left = frame.scrollLeft - window.pageXOffset + ts[1].pageX + 'px';
+			// inst.m2.style.top  = frame.scrollTop  - window.pageYOffset + ts[1].pageY + 'px';
 
+			const dist = touchDistance(ts);
 			if (baseDist) {
 				const s = dist / (baseDist * inst._scale);
 				if (s && s !== Infinity) {
 					_setScaledSize(inst, inst._scale * s);
-
-					frame.scrollLeft = imgCx * inst._scale - cx;
-					frame.scrollTop = imgCy * inst._scale - cy;
 				}
+				frame.scrollLeft = ix * inst._scale - cx;
+				frame.scrollTop  = iy * inst._scale - cy;
 			}
 			baseDist = dist / inst._scale;
+		} else {
+			frame.scrollLeft = ix * inst._scale - cx;
+			frame.scrollTop  = iy * inst._scale - cy;
+
+			// inst.m3.style.left = frame.scrollLeft + cx + 'px';
+			// inst.m3.style.top  = frame.scrollTop  + cy + 'px';
 		}
+		frame.scrollLeft = ix * inst._scale - cx;
+		frame.scrollTop  = iy * inst._scale - cy;
 	}, { passive: false });
+
+	function touchPointToImagePoint(x, y) {
+		const fsx = frame.scrollLeft;
+		const fsy = frame.scrollTop;
+		const ix = (x + fsx) / inst._scale;
+		const iy = (y + fsy) / inst._scale;
+		return [ix, iy];
+	}
 
 	function updatePoint(ts) {
 		lastTouchCount = ts.length;
-		[xS, yS] = getTouchPoint(ts);
+		[ix, iy] = touchPointToImagePoint(...getTouchPoint(ts));
 	}
 }
