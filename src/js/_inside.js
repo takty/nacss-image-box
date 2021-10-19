@@ -160,7 +160,6 @@ function setInitialSize(inst) {  // Called also when 'onResize'
 	inst._baseSize = inst._isLandscape ? inst._frm.clientWidth : inst._frm.clientHeight;
 	const rs = inst._isLandscape ? inst._img.naturalWidth : inst._img.naturalHeight;
 	inst._realScale = rs / inst._baseSize;
-	console.log(inst._realScale);
 	_doCenteringImage(inst._frm, inst._img);
 }
 
