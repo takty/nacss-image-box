@@ -158,6 +158,9 @@ function setInitialSize(inst) {  // Called also when 'onResize'
 		}
 	}
 	inst._baseSize = inst._isLandscape ? inst._frm.clientWidth : inst._frm.clientHeight;
+	const rs = inst._isLandscape ? inst._img.naturalWidth : inst._img.naturalHeight;
+	inst._realScale = rs / inst._baseSize;
+	console.log(inst._realScale);
 	_doCenteringImage(inst._frm, inst._img);
 }
 
@@ -280,7 +283,7 @@ function _enableMouseGesture(inst, frame) {
 
 		const [cx, cy] = getCursorPoint(e);
 		frame.scrollLeft += xS - cx;
-		frame.scrollTop += yS - cy;
+		frame.scrollTop  += yS - cy;
 		xS = cx;
 		yS = cy;
 	});
@@ -292,19 +295,26 @@ function _enableMouseGesture(inst, frame) {
 	frame.addEventListener('mouseup', () => { isMoving = false; });
 
 	frame.addEventListener('wheel', (e) => {
+		const s = 0 > e.deltaY ? 1.1 : 0.9;
+		zoomListener(e, inst._scale * s);
+	}, true);
+	frame.addEventListener('dblclick', (e) => {
+		if (inst._realScale < 1) return;
+		zoomListener(e, inst._scale < inst._realScale ? inst._realScale : 1);
+	}, true);
+	function zoomListener(e, scale) {
 		e.stopPropagation();
 		e.preventDefault();
 
 		const [cx, cy] = getCursorPoint(e);
-		const imgCx = (cx + frame.scrollLeft) / inst._scale;
-		const imgCy = (cy + frame.scrollTop)  / inst._scale;
+		const ix = (cx + frame.scrollLeft) / inst._scale;
+		const iy = (cy + frame.scrollTop)  / inst._scale;
 
-		const s = 0 > e.deltaY ? 1.1 : 0.9;
-		_setScaledSize(inst, inst._scale * s);
+		_setScaledSize(inst, scale);
 
-		frame.scrollLeft = imgCx * inst._scale - cx;
-		frame.scrollTop  = imgCy * inst._scale - cy;
-	}, true);
+		frame.scrollLeft = ix * inst._scale - cx;
+		frame.scrollTop  = iy * inst._scale - cy;
+	}
 }
 
 function _enableTouchGesture(inst, frame) {

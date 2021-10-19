@@ -23,6 +23,8 @@
 	display : none;
 	overflow: hidden;
 
+	-webkit-tap-highlight-color: transparent;
+
 	background-color: var(--background-color);
 	cursor          : pointer;
 	opacity         : 0;
