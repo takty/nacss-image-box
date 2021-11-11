@@ -88,10 +88,10 @@ function createViewer(cm, a) {
 	inst._hash = calcHash(inst._src);
 
 	a.addEventListener('click', e => _onOpen(inst, e, inst._hash));
-	enableClass(true, a, inst._cm.styleOpener);
+	setClass(a, inst._cm.styleOpener);
 
 	inst._frm = document.createElement('div');
-	enableClass(true, inst._frm, inst._cm.styleRoot);
+	setClass(inst._frm, inst._cm.styleRoot);
 	inst._frm.addEventListener('click', e => _onClose(e));
 
 	inst._img = document.createElement('img');
@@ -99,13 +99,13 @@ function createViewer(cm, a) {
 	inst._frm.appendChild(inst._img);
 
 	const btn = document.createElement('button');
-	enableClass(true, btn, inst._cm.styleCloser);
+	setClass(btn, inst._cm.styleCloser);
 	inst._frm.appendChild(btn);
 
 	inst._btnPrev = document.createElement('button');
 	inst._btnNext = document.createElement('button');
-	enableClass(true, inst._btnPrev, inst._cm.stylePrev);
-	enableClass(true, inst._btnNext, inst._cm.styleNext);
+	setClass(inst._btnPrev, inst._cm.stylePrev);
+	setClass(inst._btnNext, inst._cm.styleNext);
 	inst._frm.appendChild(inst._btnPrev);
 	inst._frm.appendChild(inst._btnNext);
 
@@ -114,10 +114,10 @@ function createViewer(cm, a) {
 		if (0 < fcs.length) {
 			const cap = document.createElement('div');
 			cap.innerHTML = '<span>' + fcs[0].innerHTML + '</span>';
-			enableClass(true, cap, inst._cm.styleCaption);
+			setClass(cap, inst._cm.styleCaption);
 			inst._frm.appendChild(cap);
 		}
-		enableClass(true, a.parentNode, inst._cm.styleOpenerWrapper);
+		setClass(a.parentNode, inst._cm.styleOpenerWrapper);
 	}
 	document.body.appendChild(inst._frm);
 
@@ -164,26 +164,26 @@ function setInitialSize(inst) {  // Called also when 'onResize'
 }
 
 function doOpen(inst, instantly = false) {
-	enableClass(true, inst._frm, inst._cm.styleOpen);
+	setClass(inst._frm, inst._cm.styleOpen);
 	const img = inst._img;
 	if (!img.src) {
 		img.style.opacity = '0';
 		img.src = inst._src;
 		img.addEventListener('load', () => {
 			setInitialSize(inst);
-			enableClass(true, inst._frm, inst._cm.styleLoaded);
+			setClass(inst._frm, inst._cm.styleLoaded);
 			setTimeout(() => { img.style.opacity = '1'; }, 0);
 		});
 	}
 	if (instantly) {
 		setInitialSize(inst);
-		enableClass(true, inst._frm, inst._cm.styleInstantly);
-		enableClass(true, inst._frm, inst._cm.styleVisible);
-		setTimeout(() => { enableClass(false, inst._frm, inst._cm.styleInstantly); }, 20);
+		setClass(inst._frm, inst._cm.styleInstantly);
+		setClass(inst._frm, inst._cm.styleVisible);
+		setTimeout(() => { setClass(inst._frm, inst._cm.styleInstantly, false); }, 20);
 	} else {
 		setTimeout(() => {
 			setInitialSize(inst);
-			enableClass(true, inst._frm, inst._cm.styleVisible);
+			setClass(inst._frm, inst._cm.styleVisible);
 		}, 0);
 	}
 	inst._cm.curId = inst._id;
@@ -191,13 +191,13 @@ function doOpen(inst, instantly = false) {
 
 function doClose(inst, instantly = false) {
 	if (instantly) {
-		enableClass(true, inst._frm, inst._cm.styleInstantly);
-		enableClass(false, inst._frm, inst._cm.styleVisible);
-		setTimeout(() => { enableClass(false, inst._frm, inst._cm.styleInstantly); }, 20);
+		setClass(inst._frm, inst._cm.styleInstantly);
+		setClass(inst._frm, inst._cm.styleVisible, false);
+		setTimeout(() => { setClass(inst._frm, inst._cm.styleInstantly, false); }, 20);
 	} else {
-		enableClass(false, inst._frm, inst._cm.styleVisible);
+		setClass(inst._frm, inst._cm.styleVisible, false);
 	}
-	setTimeout(() => { enableClass(false, inst._frm, inst._cm.styleOpen); }, 200);
+	setTimeout(() => { setClass(inst._frm, inst._cm.styleOpen, false); }, 200);
 	inst._cm.curId = null;
 }
 
