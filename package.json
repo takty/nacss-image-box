@@ -1,7 +1,7 @@
 {
-	"name": "nacss-table",
+	"name": "nacss-viewer",
 	"version": "1.0.0",
-	"description": "A Table Style Sheet",
+	"description": "A Viewer Style Sheet",
 	"author": "Takuto Yanagida",
 	"main": "gulpfile.js",
 	"scripts": {
@@ -11,13 +11,13 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/takty/nacss-table.git"
+		"url": "git+https://github.com/takty/nacss-viewer.git"
 	},
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/takty/nacss-table/issues"
+		"url": "https://github.com/takty/nacss-viewer/issues"
 	},
-	"homepage": "https://github.com/takty/nacss-table#readme",
+	"homepage": "https://github.com/takty/nacss-viewer#readme",
 	"browserslist": [
 		"> 1%",
 		"last 2 versions",
@@ -25,8 +25,8 @@
 		"not dead"
 	],
 	"dependencies": {
-		"@babel/core": "^7.15.8",
-		"@babel/preset-env": "^7.15.8",
+		"@babel/core": "^7.16.0",
+		"@babel/preset-env": "^7.16.4",
 		"gulp": "^4.0.2",
 		"gulp-autoprefixer": "^8.0.0",
 		"gulp-babel": "^8.0.0",
@@ -38,7 +38,7 @@
 		"gulp-rename": "^2.0.0",
 		"gulp-sass": "^5.0.0",
 		"gulp-terser": "^2.1.0",
-		"sass": "^1.43.3"
+		"sass": "^1.43.4"
 	},
 	"devDependencies": {
 		"gulp-ignore": "^3.0.0",
