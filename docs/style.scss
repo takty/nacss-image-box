@@ -12,12 +12,16 @@ main {
 }
 
 header {
-	position: sticky;
-	top     : 0;
-	z-index : 1;
-	height  : 6rem;
+	position  : sticky;
+	top       : 0;
+	z-index   : 1;
+	min-height: 6rem;
 
 	border          : 1px solid #ddd;
 	background-color: rgba(#fff, 0.5);
 	backdrop-filter : blur(4px);
+}
+
+main {
+	margin-top: 2rem;
 }
