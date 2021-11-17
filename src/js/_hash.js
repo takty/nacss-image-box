@@ -1,6 +1,6 @@
 /**
  *
- * Functions for hash
+ * Functions for Hash
  *
  * @author Takuto Yanagida
  * @version 2021-10-15

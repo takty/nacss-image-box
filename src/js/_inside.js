@@ -1,6 +1,6 @@
 /**
  *
- * Viewer (JS)
+ * Viewer
  *
  * @author Takuto Yanagida
  * @version 2021-10-19

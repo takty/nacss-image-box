@@ -1,9 +1,9 @@
 /**
  *
- * Viewer (JS)
+ * Viewer
  *
  * @author Takuto Yanagida
- * @version 2021-11-11
+ * @version 2021-11-18
  *
  */
 
@@ -13,10 +13,8 @@ window['NACSS'] = window['NACSS'] ?? {};
 
 (function (NS) {
 
-	(function () {
-		// @include _inside.js
-		NS.viewer = initialize;
-	})();
+	// @include _inside.js
+	NS.viewer = initialize;
 
 	// @include _hash.js
 	// @include _touch.js

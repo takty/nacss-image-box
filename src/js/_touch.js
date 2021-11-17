@@ -1,6 +1,6 @@
 /**
  *
- * Functions for touch support
+ * Functions for Touch Support
  *
  * @author Takuto Yanagida
  * @version 2021-10-18
