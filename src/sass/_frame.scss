@@ -1,0 +1,98 @@
+/**
+ *
+ * Image Frame
+ *
+ * @author Takuto Yanagida
+ * @version 2021-11-19
+ *
+ */
+
+
+@mixin image {
+	--image-background : #fff;
+	--image-margin     : clamp(0px, calc((100vmin - 600px) * 9999), 4rem);
+	--image-fading-time: 0.5s;
+	--loader-color     : #fff;
+
+	* { box-sizing: border-box; }
+
+	position           : absolute;
+	inset              : 0;
+	overflow           : hidden;
+	overscroll-behavior: none;
+
+	img {
+		position: absolute;
+		top     : 0;
+		left    : 0;
+
+		cursor : auto;
+		outline: solid transparent var(--image-margin);
+
+		background     : var(--image-background);
+		background-clip: padding-box;
+		border         : 1px solid #000;
+
+		opacity: 0;
+		transition: opacity var(--image-fading-time);
+	}
+	&[data-nc-loaded] img { opacity: 1; }
+
+	@extend %loader;
+}
+
+@mixin iframe {
+	--iframe-background : #fff;
+	--iframe-margin     : clamp(0px, calc((100vmin - 600px) * 9999), 4rem);
+	--iframe-fading-time: 0.5s;
+	--loader-color      : #fff;
+
+	* { box-sizing: border-box; }
+
+	position           : absolute;
+	inset              : 0;
+	overflow           : hidden;
+	overscroll-behavior: none;
+
+	padding: var(--iframe-margin);
+
+	display    : grid;
+	place-items: center;
+
+	iframe {
+		width : 100%;
+		height: auto;
+
+		background: var(--iframe-background);
+		border    : 1px solid #000;
+
+		opacity: 0;
+		transition: opacity var(--iframe-fading-time);
+	}
+	&[data-nc-loaded] img { opacity: 1; }
+
+	@extend %loader;
+}
+
+%loader {
+	&::after {
+		content : '';
+		position: fixed;
+		top     : calc(50% - 1.5rem);
+		left    : calc(50% - 1.5rem);
+		z-index : -1;
+
+		width        : 3rem;
+		height       : 3rem;
+		margin       : 1px;
+		border-radius: 50%;
+		border       : 3px solid var(--loader-color);
+		border-color : var(--loader-color) transparent var(--loader-color) transparent;
+		animation    : nc-rotate 1s infinite;
+	}
+	&[data-nc-loaded]::after { display: none; }
+	@keyframes nc-rotate {
+		0%   { transform: rotate(  0deg); }
+		100% { transform: rotate(360deg); }
+	}
+}

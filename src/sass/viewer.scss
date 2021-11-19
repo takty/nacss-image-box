@@ -3,14 +3,23 @@
  * Viewer
  *
  * @author Takuto Yanagida
- * @version 2021-10-18
+ * @version 2021-11-19
  *
  */
 
 
-@use 'inside';
+@use 'dialog';
+@use 'frame';
 
 
 div[data-nc-viewer] {
-	@include inside.style-inside;
+	@include dialog.main;
+}
+
+div[data-nc-frame-image] {
+	@include frame.image;
+}
+
+div[data-nc-frame-iframe] {
+	@include frame.iframe;
 }
