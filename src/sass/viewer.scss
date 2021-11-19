@@ -12,6 +12,11 @@
 @use 'frame';
 
 
+:root {
+	@include dialog.custom-property;
+	@include frame.custom-property;
+}
+
 div[data-nc-viewer] {
 	@include dialog.main;
 }

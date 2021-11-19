@@ -8,12 +8,14 @@
  */
 
 
-@mixin image {
-	--image-background : #fff;
-	--image-margin     : clamp(0px, calc((100vmin - 600px) * 9999), 4rem);
-	--image-fading-time: 0.5s;
-	--loader-color     : #fff;
+@mixin custom-property {
+	--nc-viewer-frame-background  : #fff;
+	--nc-viewer-frame-margin      : clamp(0px, calc((100vmin - 36rem) * 9999), 4rem);
+	--nc-viewer-frame-fading-time : 0.5s;
+	--nc-viewer-frame-loader-color: #fff;
+}
 
+@mixin image {
 	* { box-sizing: border-box; }
 
 	position           : absolute;
@@ -27,14 +29,14 @@
 		left    : 0;
 
 		cursor : auto;
-		outline: solid transparent var(--image-margin);
+		outline: solid transparent var(--nc-viewer-frame-margin);
 
-		background     : var(--image-background);
+		background     : var(--nc-viewer-frame-background);
 		background-clip: padding-box;
 		border         : 1px solid #000;
 
 		opacity: 0;
-		transition: opacity var(--image-fading-time);
+		transition: opacity var(--nc-viewer-frame-fading-time);
 	}
 	&[data-nc-loaded] img { opacity: 1; }
 
@@ -42,11 +44,6 @@
 }
 
 @mixin iframe {
-	--iframe-background : #fff;
-	--iframe-margin     : clamp(0px, calc((100vmin - 600px) * 9999), 4rem);
-	--iframe-fading-time: 0.5s;
-	--loader-color      : #fff;
-
 	* { box-sizing: border-box; }
 
 	position           : absolute;
@@ -54,7 +51,7 @@
 	overflow           : hidden;
 	overscroll-behavior: none;
 
-	padding: var(--iframe-margin);
+	padding: var(--nc-viewer-frame-margin);
 
 	display    : grid;
 	place-items: center;
@@ -63,11 +60,11 @@
 		width : 100%;
 		height: auto;
 
-		background: var(--iframe-background);
+		background: var(--nc-viewer-frame-background);
 		border    : 1px solid #000;
 
 		opacity: 0;
-		transition: opacity var(--iframe-fading-time);
+		transition: opacity var(--nc-viewer-frame-fading-time);
 	}
 	&[data-nc-loaded] img { opacity: 1; }
 
@@ -86,8 +83,8 @@
 		height       : 3rem;
 		margin       : 1px;
 		border-radius: 50%;
-		border       : 3px solid var(--loader-color);
-		border-color : var(--loader-color) transparent var(--loader-color) transparent;
+		border       : 3px solid var(--nc-viewer-frame-loader-color);
+		border-color : var(--nc-viewer-frame-loader-color) transparent var(--nc-viewer-frame-loader-color) transparent;
 		animation    : nc-rotate 1s infinite;
 	}
 	&[data-nc-loaded]::after { display: none; }

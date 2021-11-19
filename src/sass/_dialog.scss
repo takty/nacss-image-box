@@ -3,33 +3,35 @@
  * Dialog
  *
  * @author Takuto Yanagida
- * @version 2021-11-18
+ * @version 2021-11-19
  *
  */
 
 
-@mixin main {
-	--background     : #000c;
-	--caption-color  : #fff;
-	--caption-shadow : 0 0 0.25rem #000, 0 0 0.25rem #000;
-	--caption-padding: 1rem;
-	--icon-color     : #fff;
-	--fading-time    : 0.5s;
+@mixin custom-property {
+	--nc-viewer-background     : #000c;
+	--nc-viewer-caption-color  : #fff;
+	--nc-viewer-caption-shadow : 0 0 0.25rem #000, 0 0 0.25rem #000;
+	--nc-viewer-caption-padding: 1rem;
+	--nc-viewer-icon-color     : #fff;
+	--nc-viewer-fading-time    : 0.5s;
+}
 
+@mixin main {
 	display            : none;
 	overflow           : hidden;
 	overscroll-behavior: none;
 
 	-webkit-tap-highlight-color: transparent;
 
-	background: var(--background);
+	background: var(--nc-viewer-background);
 	cursor    : pointer;
 	opacity   : 0;
 	transition: opacity 0.2s;
 
 	&[data-nc-instantly] { transition: none; }
 	> * {
-		transition: opacity var(--fading-time);
+		transition: opacity var(--nc-viewer-fading-time);
 		opacity: 0;
 	}
 
@@ -42,7 +44,7 @@
 	}
 	&[data-nc-visible] {
 		opacity   : 1;
-		transition: opacity var(--fading-time);
+		transition: opacity var(--nc-viewer-fading-time);
 		&[data-nc-instantly] { transition: none; }
 		> * {
 			opacity: 1;
@@ -87,7 +89,7 @@
 		&::after {
 			width           : 2rem;
 			height          : 3px;
-			background-color: var(--icon-color);
+			background-color: var(--nc-viewer-icon-color);
 		}
 		&::before { transform: translate(-50%, -50%) rotate( 45deg); }
 		&::after  { transform: translate(-50%, -50%) rotate(-45deg); }
@@ -106,8 +108,8 @@
 		&::before {
 			width      : 1rem;
 			height     : 1rem;
-			border-top : 3px solid var(--icon-color);
-			border-left: 3px solid var(--icon-color);
+			border-top : 3px solid var(--nc-viewer-icon-color);
+			border-left: 3px solid var(--nc-viewer-icon-color);
 		}
 	}
 	> [data-nc-viewer-prev] {
@@ -127,11 +129,11 @@
 		right   : 0;
 		bottom  : 0;
 
-		padding: var(--caption-padding);
+		padding: var(--nc-viewer-caption-padding);
 
-		color      : var(--caption-color);
+		color      : var(--nc-viewer-caption-color);
 		text-align : center;
-		text-shadow: var(--caption-shadow);
+		text-shadow: var(--nc-viewer-caption-shadow);
 
 		span {
 			display   : inline-block;
