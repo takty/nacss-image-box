@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Iframe Viewer - nacss-viewer</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="css/viewer.min.css?v135030t">
+<link rel="stylesheet" href="css/style.min.css?v135030t">
+<script src="js/viewer.min.js?v135030t"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+	const as = Array.from(document.querySelectorAll('.iframe-opener'));
+	const fs = Array.from(document.querySelectorAll('.iframe-opener + iframe'));
+	NACSS.viewerIframe(as, fs);
+});
+</script>
+</head>
+
+<body>
+	<header>
+		<h1>Iframe Viewer</h1>
+		<nav><a href="index.html">Go back</a></nav>
+	</header>
+
+	<main>
+		<h2>Figures</h2>
+
+		<p>
+			<button class="iframe-opener">Open 1</button>
+			<iframe width="560" height="315" src="https://www.youtube.com/embed/YE7VzlLtp-4" frameborder="0" allowfullscreen></iframe>
+		</p>
+		<p>
+			<button class="iframe-opener">Open 2</button>
+			<iframe width="560" height="315" src="https://www.youtube.com/embed/fC4KqedgvJQ" frameborder="0" allowfullscreen></iframe>
+		</p>
+	</main>
+
+</body>
+</html>

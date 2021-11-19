@@ -25,3 +25,7 @@ header {
 main {
 	margin-top: 2rem;
 }
+
+.iframe-opener + iframe {
+	display: none;
+}
