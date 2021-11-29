@@ -124,10 +124,9 @@
 
 @mixin style-caption {
 	> [data-nc-viewer-caption] {
-		position: fixed;
-		left    : 0;
-		right   : 0;
-		bottom  : 0;
+		position       : fixed;
+		inset-inline   : 0;
+		inset-block-end: 0;
 
 		padding: var(--nc-viewer-caption-padding);
 
