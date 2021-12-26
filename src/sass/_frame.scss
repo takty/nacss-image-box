@@ -16,7 +16,7 @@
 }
 
 @mixin image {
-	* { box-sizing: border-box; }
+	* { box-sizing: border-box; }  // For reset
 
 	position           : absolute;
 	inset              : 0;
@@ -44,7 +44,7 @@
 }
 
 @mixin iframe {
-	* { box-sizing: border-box; }
+	* { box-sizing: border-box; }  // For reset
 
 	position           : absolute;
 	inset              : 0;

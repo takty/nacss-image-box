@@ -31,8 +31,14 @@
 
 	&[data-nc-instantly] { transition: none; }
 	> * {
+		opacity   : 0;
 		transition: opacity var(--nc-viewer-fading-time);
-		opacity: 0;
+	}
+	> button {
+		appearance: none;  // For reset
+		border    : none;  // For reset
+		background: none;  // For reset
+		box-sizing: border-box;  // For reset
 	}
 
 	&[data-nc-open] {
@@ -56,11 +62,6 @@
 }
 
 %button {
-	appearance: none;
-	border    : none;
-	background: none;
-	box-sizing: border-box;
-
 	position   : fixed;
 	display    : grid;
 	place-items: center;
