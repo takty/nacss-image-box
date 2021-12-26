@@ -17,7 +17,7 @@
 	--nc-viewer-fading-time    : 0.5s;
 }
 
-@mixin main {
+@mixin main($do-reset: true) {
 	display            : none;
 	overflow           : hidden;
 	overscroll-behavior: contain;
@@ -30,15 +30,18 @@
 	transition: opacity 0.2s;
 
 	&[data-nc-instantly] { transition: none; }
+
 	> * {
 		opacity   : 0;
 		transition: opacity var(--nc-viewer-fading-time);
 	}
-	> button {
-		appearance: none;  // For reset
-		border    : none;  // For reset
-		background: none;  // For reset
-		box-sizing: border-box;  // For reset
+
+	@if $do-reset {
+		> button {
+			appearance: none;  // For reset
+			border    : none;  // For reset
+			background: none;  // For reset
+		}
 	}
 
 	&[data-nc-open] {
