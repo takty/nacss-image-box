@@ -1,3 +1,19 @@
+/**
+ *
+ * Style for Document
+ *
+ * @author Takuto Yanagida
+ * @version 2021-12-26
+ *
+ */
+
+
+*,
+::before,
+::after {
+	box-sizing: border-box;
+}
+
 html {
 	scroll-behavior   : smooth;
 	scroll-padding-top: 8rem;
@@ -25,6 +41,10 @@ header {
 main {
 	margin-top: 2rem;
 }
+
+
+// -----------------------------------------------------------------------------
+
 
 .iframe-opener + iframe {
 	display: none;
