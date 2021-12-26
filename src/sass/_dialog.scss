@@ -3,12 +3,12 @@
  * Dialog
  *
  * @author Takuto Yanagida
- * @version 2021-11-29
+ * @version 2021-12-26
  *
  */
 
 
-@mixin custom-property {
+@mixin property-dialog {
 	--nc-viewer-background     : #000c;
 	--nc-viewer-caption-color  : #fff;
 	--nc-viewer-caption-shadow : 0 0 0.25rem #000, 0 0 0.25rem #000;
@@ -20,7 +20,7 @@
 @mixin main {
 	display            : none;
 	overflow           : hidden;
-	overscroll-behavior: none;
+	overscroll-behavior: contain;
 
 	-webkit-tap-highlight-color: transparent;
 
@@ -133,6 +133,8 @@
 		color      : var(--nc-viewer-caption-color);
 		text-align : center;
 		text-shadow: var(--nc-viewer-caption-shadow);
+
+		pointer-events: none;
 
 		span {
 			display   : inline-block;

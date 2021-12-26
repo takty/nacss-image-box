@@ -3,12 +3,12 @@
  * Image Viewer
  *
  * @author Takuto Yanagida
- * @version 2021-11-18
+ * @version 2021-12-26
  *
  */
 
 
-function initializeImageViewer(as, opts = {}) {
+function apply(as, opts = {}) {
 	if (as.length === 0) return;
 
 	opts = Object.assign({

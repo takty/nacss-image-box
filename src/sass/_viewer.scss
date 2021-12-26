@@ -1,0 +1,21 @@
+/**
+ *
+ * Viewer
+ *
+ * @author Takuto Yanagida
+ * @version 2021-12-26
+ *
+ */
+
+
+@forward 'dialog';
+@forward 'frame';
+
+@use 'dialog';
+@use 'frame';
+
+
+@mixin property {
+	@include dialog.property-dialog;
+	@include frame.property-frame;
+}

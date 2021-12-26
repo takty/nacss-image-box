@@ -1,6 +1,6 @@
 /**
  *
- * Viewer
+ * Viewer - Image
  *
  * @author Takuto Yanagida
  * @version 2021-12-26
@@ -18,14 +18,10 @@ window['NACSS']['viewer'] = window['NACSS']['viewer'] || {};
 	// @include __style-class.js
 	// @include __touch.js
 	// @include __utility.js
-	{
-		// @include _image.js
-		NS.applyImage = apply;
-	}
-	{
-		// @include _iframe.js
-		NS.applyIframe = apply;
-	}
+
+	// @include _image.js
+	NS.applyImage = apply;
+
 	// @include _dialog.js
 
 })(window['NACSS']['viewer']);

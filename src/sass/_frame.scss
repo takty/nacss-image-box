@@ -3,12 +3,12 @@
  * Image Frame
  *
  * @author Takuto Yanagida
- * @version 2021-11-19
+ * @version 2021-12-26
  *
  */
 
 
-@mixin custom-property {
+@mixin property-frame {
 	--nc-viewer-frame-background  : #fff;
 	--nc-viewer-frame-margin      : clamp(0px, calc((100vmin - 36rem) * 9999), 4rem);
 	--nc-viewer-frame-fading-time : 0.5s;
@@ -21,7 +21,7 @@
 	position           : absolute;
 	inset              : 0;
 	overflow           : hidden;
-	overscroll-behavior: none;
+	overscroll-behavior: contain;
 
 	img {
 		position: absolute;
@@ -49,7 +49,7 @@
 	position           : absolute;
 	inset              : 0;
 	overflow           : hidden;
-	overscroll-behavior: none;
+	overscroll-behavior: contain;
 
 	padding: var(--nc-viewer-frame-margin);
 

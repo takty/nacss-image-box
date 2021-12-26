@@ -3,12 +3,12 @@
  * Iframe Viewer
  *
  * @author Takuto Yanagida
- * @version 2021-11-19
+ * @version 2021-12-26
  *
  */
 
 
-function initializeIframeViewer(os, ifms, opts = {}) {
+function apply(os, ifms, opts = {}) {
 	if (os.length === 0) return;
 
 	opts = Object.assign({
