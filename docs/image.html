@@ -4,12 +4,12 @@
 <meta charset="utf-8">
 <title>Image Viewer - nacss-viewer</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="css/viewer.min.css?v221455t">
-<link rel="stylesheet" href="css/style.min.css?v221455t">
-<script src="js/viewer.min.js?v221455t"></script>
+<link rel="stylesheet" href="css/viewer.min.css?v150542t">
+<link rel="stylesheet" href="css/style.min.css?v150542t">
+<script src="js/viewer.min.js?v150542t"></script>
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-	const as = Array.from(document.querySelectorAll('figure a'));
+	const as = Array.from(document.querySelectorAll('a[data-nc-link-image], figure a'));
 	NACSS.viewer.applyImage(as);
 });
 </script>
@@ -22,6 +22,20 @@ document.addEventListener('DOMContentLoaded', () => {
 	</header>
 
 	<main>
+		<h2>Image Links</h2>
+
+		<p>
+			<a href="https://picsum.photos/1600/900.jpg" data-nc-link-image>
+				<img width="160" height="90" src="https://via.placeholder.com/160x90.png" alt="">
+			</a>
+		</p>
+
+		<p>
+			<a href="https://picsum.photos/1000/1500.jpg" data-nc-link-image>
+				<img width="100" height="150" src="https://via.placeholder.com/100x150.png" alt="">
+			</a>
+		</p>
+
 		<h2>Figures</h2>
 
 		<figure>
