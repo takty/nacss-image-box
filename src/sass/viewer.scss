@@ -3,7 +3,7 @@
  * Viewer
  *
  * @author Takuto Yanagida
- * @version 2021-12-26
+ * @version 2022-01-07
  *
  */
 
@@ -16,7 +16,7 @@
 }
 
 div[data-nc-viewer] {
-	@include viewer.main;
+	@include viewer.main(true /* $do-reset */);
 }
 
 div[data-nc-frame-image] {
