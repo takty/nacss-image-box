@@ -3,7 +3,7 @@
  * Dialog
  *
  * @author Takuto Yanagida
- * @version 2021-12-26
+ * @version 2022-08-05
  *
  */
 
@@ -17,7 +17,7 @@
 	--nc-viewer-fading-time    : 0.5s;
 }
 
-@mixin main($do-reset: true) {
+@mixin main() {
 	display            : none;
 	overflow           : hidden;
 	overscroll-behavior: contain;
@@ -36,12 +36,10 @@
 		transition: opacity var(--nc-viewer-fading-time);
 	}
 
-	@if $do-reset {
-		> button {
-			appearance: none;  // For reset
-			border    : none;  // For reset
-			background: none;  // For reset
-		}
+	> button {
+		appearance: none;
+		background: none;
+		border    : none;
 	}
 
 	&[data-nc-open] {
