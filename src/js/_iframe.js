@@ -3,7 +3,7 @@
  * Iframe Viewer
  *
  * @author Takuto Yanagida
- * @version 2021-12-26
+ * @version 2022-08-17
  *
  */
 
@@ -17,11 +17,11 @@ function apply(os, ifms, opts = {}) {
 	}, opts);
 
 	const fs = os.map((o, i) => {
-		const hash = calcHash(ifms[i].src);
+		const id = calcHashSet(ifms[i].src);
 		const [frameInst, frame] = createIframeFrame(opts, ifms[i]);
 		assignIframeOpenerStyle(o, opts['styleOpener']);
 
-		return { opener: o, hash, frameInst, frame, caption: null };
+		return { opener: o, id, frameInst, frame, caption: null };
 	});
 	initialize(fs, opts);
 }

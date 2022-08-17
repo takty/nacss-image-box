@@ -3,7 +3,7 @@
  * Image Viewer
  *
  * @author Takuto Yanagida
- * @version 2021-12-26
+ * @version 2022-08-17
  *
  */
 
@@ -17,12 +17,12 @@ function apply(as, opts = {}) {
 	}, opts);
 
 	const fs = as.map(a => {
-		const hash = calcHash(a.href);
+		const id = calcHashSet(a.href);
 		const [frameInst, frame] = createImageFrame(opts, a.href);
 		const caption = extractImageCaption(a);
 		assignImageOpenerStyle(a, opts['styleOpener'], opts['styleOpenerWrapper']);
 
-		return { opener: a, hash, frameInst, frame, caption };
+		return { opener: a, id, frameInst, frame, caption };
 	});
 	initialize(fs, opts);
 }

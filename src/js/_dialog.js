@@ -3,7 +3,7 @@
  * Dialog
  *
  * @author Takuto Yanagida
- * @version 2021-11-18
+ * @version 2022-08-17
  *
  */
 
@@ -25,23 +25,28 @@ function initialize(fs, opts = {}) {
 		hashPrefix: 'viewer:',
 	}, opts);
 
-	const is = fs.map(f => {
-		const inst = createViewer(opts, f.hash, f.frameInst, f.frame, f.caption);
+	const is = new Map();
+	let prev = null;
+	for (const f of fs) {
+		const inst = createViewer(opts, f.id, f.frameInst, f.frame, f.caption, prev);
 		f.opener.addEventListener('click', e => _onOpen(inst, e));
-		return inst;
-	});
+		is.set(f.id, inst);
+		prev = inst;
+	}
 	assignEventHandler(is);
 	processHash(is, opts['hashPrefix']);
 }
 
 function assignEventHandler(is) {
 	onResize(() => {
-		for (const inst of is) inst.fi.doResize();
-		setTimeout(() => { for (const inst of is) inst.fi.doResize(); }, 200);
+		for (const inst of is.values()) inst.fi.doResize();
+		setTimeout(() => {
+			for (const inst of is.values()) inst.fi.doResize();
+		}, 200);
 	});
 	window.addEventListener('keydown', e => {
 		if (currentId !== null && !e.altKey && !e.ctrlKey && !e.shiftKey) {
-			const cur = is[currentId];
+			const cur = is.get(currentId);
 			if (e.key === 'Escape') cur.dlg.click();
 			else if (e.key === 'ArrowLeft') cur.btnPrev.click();
 			else if (e.key === 'ArrowRight') cur.btnNext.click();
@@ -51,9 +56,11 @@ function assignEventHandler(is) {
 
 function processHash(is, hashPrefix) {
 	window.addEventListener('popstate', e => {
-		if (currentId !== null) doClose(is[currentId]);
-		if (e.state && e.state['name'] === 'nc-viewer' && e.state['id'] !== undefined) {
-			doOpen(is[e.state['id']]);
+		if (currentId !== null && is.has(currentId)) {
+			doClose(is.get(currentId));
+		}
+		if (e.state && e.state['name'] === 'nc-viewer' && e.state['id'] !== undefined && is.has(e.state['id'])) {
+			doOpen(is.get(e.state['id']));
 		}
 	});
 	window.addEventListener('hashchange', () => checkHash(is, hashPrefix, location.hash));
@@ -62,12 +69,12 @@ function processHash(is, hashPrefix) {
 
 function checkHash(is, hashPrefix, hash) {
 	if (location.hash.indexOf('#' + hashPrefix) !== 0) return;
-	const ih = hash.replace('#' + hashPrefix, '');
-	if (!ih) return;
-	for (let i = 0; i < is.length; i += 1) {
-		if (is[i].hash === ih) {
-			if (currentId !== null && currentId !== i) doClose(is[currentId]);
-			if (currentId === null || currentId !== i) doOpen(is[i]);
+	const h = hash.replace('#' + hashPrefix, '');
+	if (!h) return;
+	for (const [id, inst] of is) {
+		if (id === h) {
+			if (currentId !== null && currentId !== id) doClose(is.get(currentId));
+			if (currentId === null || currentId !== id) doOpen(inst);
 			break;
 		}
 	}
@@ -77,16 +84,13 @@ function checkHash(is, hashPrefix, hash) {
 // -----------------------------------------------------------------------------
 
 
-let instanceCount = 0;
-let prevInstance  = null;
-let currentId     = null;
+let currentId = null;
 
-function createViewer(opts, hash, frameInst, frame, caption = null) {
+function createViewer(opts, id, frameInst, frame, caption, prevInstance = null) {
 	const inst = {};
 	inst.opts = opts;
 	inst.fi   = frameInst;
-	inst.id   = instanceCount++;
-	inst.hash = hash;
+	inst.id   = id;
 
 	inst.dlg = document.createElement('div');
 	setClass(inst.dlg, opts.styleRoot);
@@ -131,7 +135,7 @@ function doOpen(inst, instantly = false) {
 		setClass(inst.dlg, inst.opts.styleVisible);
 		setTimeout(() => { setClass(inst.dlg, inst.opts.styleInstantly, false); }, 20);
 
-		const url = '#' + inst.opts.hashPrefix + inst.hash;
+		const url = '#' + inst.opts.hashPrefix + inst.id;
 		history.replaceState(null, '', url);
 	} else {
 		setTimeout(() => {
@@ -140,6 +144,11 @@ function doOpen(inst, instantly = false) {
 		}, 0);
 	}
 	currentId = inst.id;
+
+	const sty = getComputedStyle(document.documentElement);
+	if (sty.marginTop) {
+		inst.dlg.style.top = sty.marginTop;
+	}
 }
 
 function doClose(inst, instantly = false) {
@@ -188,10 +197,10 @@ function _onOpen(inst, e) {
 	doOpen(inst);
 
 	if (location.hash) {
-		const newUrl = location.href.substr(0, location.href.indexOf('#'));
+		const newUrl = location.href.substring(0, location.href.indexOf('#'));
 		history.replaceState(null, '', newUrl);
 	}
-	const url = '#' + inst.opts.hashPrefix + inst.hash;
+	const url = '#' + inst.opts.hashPrefix + inst.id;
 	history.pushState({ name: 'nc-viewer', id: inst.id }, null, url);
 }
 
