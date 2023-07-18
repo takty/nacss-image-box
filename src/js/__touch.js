@@ -3,13 +3,13 @@
  * Functions for Touch Support
  *
  * @author Takuto Yanagida
- * @version 2021-10-18
+ * @version 2023-07-18
  *
  */
 
 
 function getTouchPoint(ts) {
-	const pxo = window.pageXOffset, pyo = window.pageYOffset;
+	const pxo = window.scrollX, pyo = window.scrollY;
 	let x = 0, y = 0;
 	if (ts.length === 1) {
 		x = ts[0].pageX - pxo;
@@ -39,5 +39,5 @@ function preventWindowTouchMove(f) {
 }
 
 function getCursorPoint(e) {
-	return [e.pageX - window.pageXOffset, e.pageY - window.pageYOffset];
+	return [e.pageX - window.scrollX, e.pageY - window.scrollY];
 }
